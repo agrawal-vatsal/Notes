@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
         if (item.getItemId() == R.id.addNote) {
-            Intent intent = new Intent(this, AddNote.class);
+            Intent intent = new Intent(MainActivity.this, AddNote.class);
             intent.putExtra("isNew", true);
             startActivity(intent);
             return true;
@@ -65,14 +65,14 @@ public class MainActivity extends AppCompatActivity {
         );
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
-                    Intent intent = new Intent(getApplicationContext(), AddNote.class);
+                    Intent intent = new Intent(MainActivity.this, AddNote.class);
                     intent.putExtra("isNew", false);
                     intent.putExtra("position", position);
                     startActivity(intent);
                 }
         );
         listView.setOnItemLongClickListener((AdapterView<?> parent, View view, final int position, long id) -> {
-            new AlertDialog.Builder(getApplicationContext())
+            new AlertDialog.Builder(MainActivity.this)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setTitle("Delete Note")
                     .setMessage("Are You Sure you want to delete the note")
@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         arrayAdapter.notifyDataSetChanged();
+                        startActivity(new Intent(MainActivity.this, MainActivity.class));
                     })
                     .setNegativeButton("No", (dialog, which) -> {
                     })
